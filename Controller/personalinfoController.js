@@ -34,17 +34,13 @@ class Controller {
   //edit
   put(req, res, next) {
     let { id } = req.params;
-    let body = req.body;
-    personalinfo.updateOne(
-      { _id: id },
-      {
-        $set: body,
-      },
-      (err, response) => {
-        if (err) return next(err);
-        res.status(200).send({ success: true, response });
-      }
-    );
+    let {name,description} = req.body;
+    let { filename } = req.file || {};
+     let data = { name: name, img: filename, description: description };
+    personalinfo.updateOne({ _id: id }, data, (err, response) => {
+      if (err) return next(err);
+      res.status(200).send({ success: true, response });
+    });
   }
 
   //delete
